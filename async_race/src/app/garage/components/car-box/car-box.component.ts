@@ -60,8 +60,7 @@ export class CarBoxComponent implements AfterViewInit {
     let step = stepCar;
     if (this.data?.velocity && this.data.distance) {
       state.time = this.data.distance / this.data.velocity;
-    }
-    
+    }    
     const move = () => {
       const currDist = document.body.clientWidth - finishLineInPixel;
       const pixForSec = currDist / state.time;
@@ -70,9 +69,7 @@ export class CarBoxComponent implements AfterViewInit {
       if (step < currDist)
         this.animationId = window.requestAnimationFrame(move);
     };
-
-    this.animationId = window.requestAnimationFrame(move);
-    console.log('start', this.animationId);
+    this.animationId = window.requestAnimationFrame(move);   
   }
 
   stopAnimation(): void {

@@ -10,6 +10,7 @@ import { CarItemComponent } from './components/car-item/car-item.component';
 import { CarBoxComponent } from './components/car-box/car-box.component';
 import { CarService } from './services/car-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatInputModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   exports: [GarageComponent, GarageHeaderComponent],
   providers:[CarService]

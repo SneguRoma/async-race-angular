@@ -2,32 +2,33 @@
   <button mat-raised-button color="accent" class="oval-button">Race</button>
   <button mat-raised-button color="warn" class="oval-button">Reset</button>
   <span class="spacer"></span>
-  <form class="my-form" (submit)="onSubmit()">
+  <form class="my-form" (submit)="createCar()">
     <div class="form-group">
       <input
-        id="create-textInput1"
+        [(ngModel)]="carName"
+        name="carName"
         type="text"
         class="form-control"
         placeholder="Enter name"
       />
     </div>
     <div class="form-group">
-      <input id="create-colorInput" type="color" class="form-control-color" />
+      <input
+        [(ngModel)]="carColor"
+        name="carColor"
+        type="color"
+        class="form-control-color"
+      />
     </div>
     <button mat-raised-button type="submit" color="accent">Create</button>
   </form>
   <span class="spacer"></span>
-  <form class="my-form" (submit)="onSubmit()">
+  <form class="my-form" (submit)="updateCar()">
     <div class="form-group">
-      <input
-        id="update-textInput"
-        type="text"
-        class="form-control"
-        placeholder="Enter name"
-      />
+      <input type="text" class="form-control" placeholder="Enter name" />
     </div>
     <div class="form-group">
-      <input id="update-colorInput" type="color" class="form-control-color" />
+      <input type="color" class="form-control-color" />
     </div>
     <button mat-raised-button type="submit" color="accent">Update</button>
   </form>
