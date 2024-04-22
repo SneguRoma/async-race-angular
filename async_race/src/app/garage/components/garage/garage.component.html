@@ -1,8 +1,8 @@
 <app-garage-header></app-garage-header>
 <div
-  *ngFor="let box of boxes; "
+  *ngFor="let car of cars; "
   >
-  <app-car-box [name]="box"> </app-car-box>
+  <app-car-box [carItem]="car"> </app-car-box>
   
 </div>
 <!-- <mat-toolbar color="primary">    

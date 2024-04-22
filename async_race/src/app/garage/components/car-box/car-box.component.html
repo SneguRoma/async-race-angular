@@ -2,13 +2,13 @@
 
     <div class="drive-box">
         <button mat-raised-button class="drive-box-button" color="accent">Select</button>
-        <button (click)="animationCar()" mat-raised-button class="drive-box-button" color="accent">Start</button>
+        <button (click)="startEngine()" mat-raised-button class="drive-box-button" color="accent">Start</button>
         <button mat-raised-button class="drive-box-button" color="accent">Remove</button>
         <button  (click)="stopEngine()" mat-raised-button class="drive-box-button" color="accent">Stop</button>
     </div>
-    <p>{{this.name}} </p>
+    <p>{{this.carItem.name}} </p>
 </div>
 <div class="car-container">
-<app-car-item  #carElement  class="car-item" ></app-car-item>
+<app-car-item  #carElement [color]="carItem.color" class="car-item" ></app-car-item>
 </div>
 

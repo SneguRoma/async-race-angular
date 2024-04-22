@@ -11,41 +11,42 @@ const DEFAULT_LIMIT = 7;
   providedIn: 'root'
 })
 export class CarService {
-  private apiUrl = 'http://127.0.0.1:3000/garage';
+  private apiUrlGarage = 'http://127.0.0.1:3000/garage';
+  private apiUrlEngine = 'http://127.0.0.1:3000/engine';
   
 
   constructor(private http: HttpClient) { }
 
   getCars(page: number = DEFAULT_PAGE, limit: number = DEFAULT_LIMIT): Observable<ICar[]> {
-    const url = `${this.apiUrl}?_page=${page}&_limit=${limit}`;
+    const url = `${this.apiUrlGarage}?_page=${page}&_limit=${limit}`;
     return this.http.get<ICar[]>(url);
   }
 
   getCar(id: number): Observable<ICar> {
-    return this.http.get<ICar>(`${this.apiUrl}/${id}`);
+    return this.http.get<ICar>(`${this.apiUrlGarage}/${id}`);
   }
 
   addCar(car: INewCar): Observable<ICar> {
-    return this.http.post<ICar>(this.apiUrl, car);
+    return this.http.post<ICar>(this.apiUrlGarage, car);
   }
 
   updateCar(id: number, car: INewCar): Observable<ICar> {
-    return this.http.put<ICar>(`${this.apiUrl}/${id}`, car);
+    return this.http.put<ICar>(`${this.apiUrlGarage}/${id}`, car);
   }
 
   deleteCar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrlGarage}/${id}`);
   }
 
   startEngine(id: number): Observable<ICarStartStop> {
-    return this.http.patch<ICarStartStop>(`${this.apiUrl}/engine?id=${id}&status=started`, {});
+    return this.http.patch<ICarStartStop>(`${this.apiUrlEngine}?id=${id}&status=started`, {});
   }
 
   stopEngine(id: number): Observable<ICarStartStop> {
-    return this.http.patch<ICarStartStop>(`${this.apiUrl}/engine?id=${id}&status=stopped`, {});
+    return this.http.patch<ICarStartStop>(`${this.apiUrlEngine}?id=${id}&status=stopped`, {});
   }
 
   startDrive(id: number): Observable<ISuccess> {
-    return this.http.patch<ISuccess>(`${this.apiUrl}/engine?id=${id}&status=drive`, {});
+    return this.http.patch<ISuccess>(`${this.apiUrlEngine}?id=${id}&status=drive`, {});
   }
 }

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CarItemComponent } from './components/car-item/car-item.component';
 import { CarBoxComponent } from './components/car-box/car-box.component';
 import { CarService } from './services/car-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { CarService } from './services/car-service.service';
     MatToolbarModule,
     MatInputModule,
     MatButtonModule,
-    
+    HttpClientModule
   ],
   exports: [GarageComponent, GarageHeaderComponent],
   providers:[CarService]
