@@ -8,6 +8,7 @@ import { GarageHeaderComponent } from './components/garage-header/garage-header.
 import { MatInputModule } from '@angular/material/input';
 import { CarItemComponent } from './components/car-item/car-item.component';
 import { CarBoxComponent } from './components/car-box/car-box.component';
+import { CarService } from './services/car-service.service';
 
 
 @NgModule({
@@ -26,5 +27,6 @@ import { CarBoxComponent } from './components/car-box/car-box.component';
     
   ],
   exports: [GarageComponent, GarageHeaderComponent],
+  providers:[CarService]
 })
 export class GarageModule {}

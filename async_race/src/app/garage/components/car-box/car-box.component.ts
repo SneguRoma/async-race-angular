@@ -1,51 +1,63 @@
-import { Component, Input } from '@angular/core';
-import {
-  trigger,
-  transition,
-  animate,
-  style,
-  state,
-} from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
-/* const enterTransition = transition(':enter',[style({
-  transform: 'translateX(0)' 
-}), animate('1s ease-in', style({
-  //margin: '100px',
-  transform: 'translateX(100%)' 
-}))]); */
-//const moveCar = trigger('moveCar', [enterTransition])
+const finishLineInPixel = 100;
+const pixelInStep = 30;
+const startPosition = 15;
+const stepCar = 15;
 
 @Component({
   selector: 'app-car-box',
   templateUrl: './car-box.component.html',
-  styleUrl: './car-box.component.scss',
-  animations: [
-    trigger('moveCar', [
-      state(
-        'start',
-        style({
-          transform: 'translateX(0)',
-        })
-      ),
-      state(
-        'end',
-        style({
-          transform: 'translateX(85vw)',
-        })
-      ),
-      transition('start => end', animate('3s ease-in-out')),
-    ]),
-  ],
+  styleUrls: ['./car-box.component.scss'],
 })
-export class CarBoxComponent {
-  @Input()
-  name!: string;
-  animationState: string = 'start';
+export class CarBoxComponent implements AfterViewInit {
+  @ViewChild('carElement', { read: ElementRef }) carElement!: ElementRef;
+  @Input() name!: string;
+  animationId: number | null = null;
+  car:HTMLElement | undefined;
+  constructor() {}
 
-  triggerAnimation(): void {
-    this.animationState = 'end';
+  ngAfterViewInit(): void {
+   this.car =this.carElement.nativeElement;
   }
+
+  animationCar(/* id:number,velo: number, dist: number, carName?: string */): void {
+    const state: { id: number; time: number } = { id: 0, time: 0 };
+
+    let step = stepCar;
+    //const el = this.carElement.nativeElement as HTMLElement;
+    const dist = 500000;
+    const velo = 64;
+    state.time = dist / velo;
+    const move = () => {
+      const currDist = document.body.clientWidth - finishLineInPixel;
+
+      const timeForDist = dist / velo;
+      const pixForSec = currDist / timeForDist;
+      step += pixForSec * pixelInStep;
+      if(this.car) this.car.style.left = step + 'px';
+      if (step < currDist)
+        this.animationId = window.requestAnimationFrame(move);
+    };
+    this.animationId = window.requestAnimationFrame(move);
+  }
+
   stopAnimation(): void {
-    this.animationState = 'start';
+    if (this.animationId) {
+     
+      window.cancelAnimationFrame(this.animationId);
+      this.animationId = null;
+    }
+  }
+
+  stopEngine(): void{
+    if (this.animationId) {
+     
+      window.cancelAnimationFrame(this.animationId);
+      this.animationId = null;
+      if(this.car) this.car.style.left = startPosition + 'px'  
+    }
+    
+    
   }
 }
