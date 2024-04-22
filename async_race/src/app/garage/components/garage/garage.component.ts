@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './garage.component.scss'
 })
 export class GarageComponent {
-
+boxes= ['audi', 'bmw', 'opel', 'kia','ford','tank','supermario',]
 }

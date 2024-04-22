@@ -1,4 +1,10 @@
 <app-garage-header></app-garage-header>
+<div
+  *ngFor="let box of boxes; "
+  >
+  <app-car-box [name]="box"> </app-car-box>
+  
+</div>
 <!-- <mat-toolbar color="primary">    
     <span class="app-title">Garage</span>
   </mat-toolbar> -->
