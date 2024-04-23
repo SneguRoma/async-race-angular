@@ -1,7 +1,4 @@
 <app-garage-header (updateParent)="ngOnInit()"></app-garage-header>
-<div
-  *ngFor="let car of cars; "
-  >
-  <app-car-box [carItem]="car"> </app-car-box>
-  
+<div *ngFor="let car of cars">
+  <app-car-box (updateParent)="ngOnInit()" [carItem]="car"> </app-car-box>
 </div>

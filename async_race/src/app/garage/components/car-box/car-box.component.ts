@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ICar, ICarStartStop, ISuccess } from '../../models/garage.model';
@@ -19,6 +21,7 @@ const stepCar = 15;
   styleUrls: ['./car-box.component.scss'],
 })
 export class CarBoxComponent implements AfterViewInit {
+  @Output() updateParent: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('carElement', { read: ElementRef }) carElement!: ElementRef;
   @Input() carItem!: ICar;
   data: ICarStartStop | undefined;
@@ -60,7 +63,7 @@ export class CarBoxComponent implements AfterViewInit {
     let step = stepCar;
     if (this.data?.velocity && this.data.distance) {
       state.time = this.data.distance / this.data.velocity;
-    }    
+    }
     const move = () => {
       const currDist = document.body.clientWidth - finishLineInPixel;
       const pixForSec = currDist / state.time;
@@ -69,7 +72,7 @@ export class CarBoxComponent implements AfterViewInit {
       if (step < currDist)
         this.animationId = window.requestAnimationFrame(move);
     };
-    this.animationId = window.requestAnimationFrame(move);   
+    this.animationId = window.requestAnimationFrame(move);
   }
 
   stopAnimation(): void {
@@ -94,5 +97,16 @@ export class CarBoxComponent implements AfterViewInit {
       this.animationId = null;
       if (this.car) this.car.style.left = startPosition + 'px';
     }
+  }
+
+  deleteCar(): void {
+    this.carService.deleteCar(this.carItem.id).subscribe({
+      next: () => {
+        this.updateParent.emit();
+      },
+      error: (response: Response) => {
+        console.log('Error fetching cars:', response.body);
+      },
+    });
   }
 }
