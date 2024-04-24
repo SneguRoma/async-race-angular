@@ -1,9 +1,8 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { CarService } from '../../services/car-service.service';
 import { UpdateCarService } from '../../services/update-car.service';
 import { Subscription } from 'rxjs';
-
-const UNUPDATECAR_ID = -1;
+import { UNUPDATECAR_ID, COUT_CARS, getRandom, MINRANDOM, MAXNAMES, MAXMODELS, MAXCOLORS, MODELS, NAMES, COLORS } from './constants';
 
 @Component({
   selector: 'app-garage-header',
@@ -12,6 +11,9 @@ const UNUPDATECAR_ID = -1;
 })
 export class GarageHeaderComponent implements OnDestroy {
   @Output() updateParent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() startRaceParent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() resetRaceParent: EventEmitter<void> = new EventEmitter<void>();
+  @Input() totalCars: number | undefined;
   carName: string = '';
   carColor: string = '';
   updateCarName: string = '';
@@ -42,6 +44,14 @@ export class GarageHeaderComponent implements OnDestroy {
       });
   }
 
+  startRace(): void {
+    this.startRaceParent.emit();
+  }
+
+  resetRace(): void {
+    this.resetRaceParent.emit();
+  }
+
   updateCar(): void {
     this.carService
       .updateCar(this.updateCarId, {
@@ -56,6 +66,25 @@ export class GarageHeaderComponent implements OnDestroy {
           this.updateParent.emit();
         },
       });
+  }
+
+  generateCars(): void {
+    for (let i = 0; i < COUT_CARS; i++) {
+      const name =
+        NAMES[getRandom(MINRANDOM, MAXNAMES)] +
+        '  ' +
+        MODELS[getRandom(MINRANDOM, MAXMODELS)];
+      const color =
+        '#' +
+        COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
+        COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
+        COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
+        COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
+        COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
+        COLORS[getRandom(MINRANDOM, MAXCOLORS)];
+      this.carService.addCar({ name: name, color: color }).subscribe();
+    }
+    this.updateParent.emit();
   }
 
   ngOnDestroy(): void {

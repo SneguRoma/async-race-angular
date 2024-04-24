@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
-  <button mat-raised-button color="accent" class="oval-button">Race</button>
-  <button mat-raised-button color="warn" class="oval-button">Reset</button>
+  <button (click)="startRace()" mat-raised-button color="accent" class="oval-button">Race</button>
+  <button (click)="resetRace()" mat-raised-button color="warn" class="oval-button">Reset</button>
   <span class="spacer"></span>
   <form class="my-form" (submit)="createCar()">
     <div class="form-group">
@@ -51,11 +51,11 @@
     </button>
   </form>
   <span class="spacer"></span>
-  <button mat-raised-button color="warn" class="oval-button">
+  <button (click)="generateCars()" mat-raised-button color="warn" class="oval-button">
     Generate cars
   </button>
   <span class="spacer"></span>
 
   <span class="spacer"></span>
-  <span class="app-title">Garage</span>
+  <span class="app-title">Garage    Total Cars {{totalCars}}</span>
 </mat-toolbar>

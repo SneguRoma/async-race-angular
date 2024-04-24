@@ -10,6 +10,7 @@ import {
 import { ICar, ICarStartStop, ISuccess } from '../../models/garage.model';
 import { CarService } from '../../services/car-service.service';
 import { UpdateCarService } from '../../services/update-car.service';
+import { concatMap } from 'rxjs';
 
 const finishLineInPixel = 100;
 const pixelInStep = 30;
@@ -39,27 +40,26 @@ export class CarBoxComponent implements AfterViewInit {
   }
 
   async startEngine(): Promise<void> {
-    this.carService.startEngine(this.carItem.id).subscribe({
-      next: (data: ICarStartStop) => {
-        this.data = data;
-        console.log(this.data);
-        this.animationCar();
-        this.carService.startDrive(this.carItem.id).subscribe({
-          next: (data: ISuccess) => {
-            console.log(data.success);
-            if (!data.success) {
-              this.stopAnimation();
-            }
-          },
-          error: (response: Response) => {
-            console.log('Error fetching cars:', response.body);
-          },
-        });
-      },
-      error: (response: Response) => {
-        console.log('Error fetching cars:', response.body);
-      },
-    });
+    this.carService
+      .startEngine(this.carItem.id)
+      .pipe(
+        concatMap((engineResponse: ICarStartStop) => {
+          this.data = engineResponse;
+          this.animationCar();
+          return this.carService.startDrive(this.carItem.id);
+        })
+      )
+      .subscribe({
+        next: (driveResponse: ISuccess) => {
+          if (!driveResponse.success) {
+            this.stopAnimation();
+          }
+        },
+        error: (response: Response) => {
+          this.stopAnimation();
+          console.log('Error fetching cars:', response.body);
+        },
+      });
   }
 
   animationCar(): void {
@@ -96,11 +96,12 @@ export class CarBoxComponent implements AfterViewInit {
         console.log('Error fetching cars:', response.body);
       },
     });
+    if (this.car) this.car.style.left = startPosition + 'px';
     if (this.animationId) {
-      window.cancelAnimationFrame(this.animationId);
+      window.cancelAnimationFrame(this.animationId);      
       this.animationId = null;
-      if (this.car) this.car.style.left = startPosition + 'px';
     }
+    
   }
 
   deleteCar(): void {
@@ -116,5 +117,9 @@ export class CarBoxComponent implements AfterViewInit {
 
   selectCar(): void {
     this.updateService.updateFormData(this.carItem);
+  }
+
+  someMethodInCarBox(): void {
+    console.log(`Method in ${this.carItem.name} car-box executed!`);
   }
 }

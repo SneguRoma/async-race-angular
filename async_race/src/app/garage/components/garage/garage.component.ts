@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CarService } from '../../services/car-service.service';
 import { ICar } from '../../models/garage.model';
+import { CarBoxComponent } from '../car-box/car-box.component';
 
 @Component({
   selector: 'app-garage',
@@ -8,11 +9,21 @@ import { ICar } from '../../models/garage.model';
   styleUrl: './garage.component.scss',
 })
 export class GarageComponent implements OnInit {
+  @ViewChildren(CarBoxComponent) carBoxComponents!: QueryList<CarBoxComponent>;
   cars: ICar[] = [];
+  totalCars: ICar[] = [];
   constructor(private carService: CarService) {}
 
   ngOnInit(): void {
-    this.carService.getCars().subscribe({
+    this.carService.getAllCars().subscribe({
+      next: (cars: ICar[]) => {
+        this.totalCars = cars;
+      },
+      error: (error: Error) => {
+        console.error('Error fetching cars:', error);
+      },
+    });
+    this.carService.getCars(1, 7).subscribe({
       next: (cars: ICar[]) => {
         this.cars = cars;
       },
@@ -20,5 +31,13 @@ export class GarageComponent implements OnInit {
         console.error('Error fetching cars:', error);
       },
     });
+  }
+
+  startRace(): void {
+    this.carBoxComponents.forEach((item) => item.startEngine());
+  }
+
+  resetRace(): void {
+    this.carBoxComponents.forEach((item) => item.stopEngine());
   }
 }
