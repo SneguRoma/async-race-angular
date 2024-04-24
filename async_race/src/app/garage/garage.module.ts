@@ -11,6 +11,7 @@ import { CarBoxComponent } from './components/car-box/car-box.component';
 import { CarService } from './services/car-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { UpdateCarService } from './services/update-car.service';
 
 
 @NgModule({
@@ -30,6 +31,6 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   exports: [GarageComponent, GarageHeaderComponent],
-  providers:[CarService]
+  providers:[CarService, UpdateCarService]
 })
 export class GarageModule {}

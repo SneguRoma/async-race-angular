@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ICar, ICarStartStop, ISuccess } from '../../models/garage.model';
 import { CarService } from '../../services/car-service.service';
+import { UpdateCarService } from '../../services/update-car.service';
 
 const finishLineInPixel = 100;
 const pixelInStep = 30;
@@ -28,7 +29,10 @@ export class CarBoxComponent implements AfterViewInit {
 
   animationId: number | null = null;
   car: HTMLElement | undefined;
-  constructor(private carService: CarService) {}
+  constructor(
+    private carService: CarService,
+    private updateService: UpdateCarService
+  ) {}
 
   ngAfterViewInit(): void {
     this.car = this.carElement.nativeElement;
@@ -108,5 +112,9 @@ export class CarBoxComponent implements AfterViewInit {
         console.log('Error fetching cars:', response.body);
       },
     });
+  }
+
+  selectCar(): void {
+    this.updateService.updateFormData(this.carItem);
   }
 }
