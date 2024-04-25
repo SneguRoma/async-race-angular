@@ -30,7 +30,7 @@ import { UpdateCarService } from '../services/update-car.service';
     HttpClientModule,
     FormsModule
   ],
-  exports: [GarageComponent, GarageHeaderComponent],
+  exports: [GarageComponent, GarageHeaderComponent, CarItemComponent],
   providers:[CarService, UpdateCarService]
 })
 export class GarageModule {}

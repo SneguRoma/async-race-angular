@@ -5,18 +5,29 @@ import { WinnersRoutingModule } from './winners-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { WinnerService } from '../services/winner-service.service';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { WinnersHeaderComponent } from './components/winners-header/winners-header.component';
+import { WinnersTableHeaderComponent } from './components/winners-table-header/winners-table-header.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { GarageModule } from '../garage/garage.module';
+import { WinnersTableRowComponent } from './components/winners-table-row/winners-table-row.component';
+import { CarService } from '../services/car-service.service';
 
 @NgModule({
-  declarations: [WinnersComponent],
+  declarations: [
+    WinnersComponent,
+    WinnersHeaderComponent,
+    WinnersTableHeaderComponent,
+    WinnersTableRowComponent
+  ],
   imports: [
     CommonModule,
     WinnersRoutingModule,
     MatToolbarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    GarageModule,
   ],
   exports: [WinnersComponent],
-  providers:[WinnerService]
+  providers: [WinnerService, CarService],
 })
-export class WinnersModule { }
+export class WinnersModule {}
