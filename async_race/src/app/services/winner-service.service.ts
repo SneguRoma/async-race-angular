@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { IGetWinners, IWin, IWinUpdate } from '../winners/models/winner.models';
+import { DEFAULT_TOTALCOUNT } from '../constants/constants';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
-const DEFAULT_TOTALCOUNT = 0;
 
 @Injectable({
   providedIn: 'root',

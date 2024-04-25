@@ -40,7 +40,7 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
     this.car = this.carElement.nativeElement;
   }
 
-  async startEngine(): Promise<void> {
+  startEngine(): void {
     this.carService
       .startEngine(this.carItem.id)
       .pipe(
@@ -121,9 +121,6 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
     this.updateService.updateFormData(this.carItem);
   }
 
-  someMethodInCarBox(): void {
-    console.log(`Method in ${this.carItem.name} car-box executed!`);
-  }
 
   ngOnDestroy(): void {
     this.updateService.updateFormData({id: -1, name:'', color:''});

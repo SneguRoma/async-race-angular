@@ -1,7 +1,7 @@
 <div class="header-row">
-    <div class="header-cell">Number</div>
+    <button (click)="changeSortField('id')" mat-button class="header-cell button">Number</button>
     <div class="header-cell">Car</div>
     <div class="header-cell name">Name</div>
-    <div class="header-cell">Wins</div>
-    <div class="header-cell">Best Time</div>
+    <button (click)="changeSortField('wins')" class="header-cell button">Wins</button>
+    <button (click)="changeSortField('time')" class="header-cell button">Best Time</button>
   </div>

@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { GarageModule } from '../garage/garage.module';
 import { WinnersTableRowComponent } from './components/winners-table-row/winners-table-row.component';
 import { CarService } from '../services/car-service.service';
+import { WinnersSorterService } from '../services/winners-sorter.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,6 @@ import { CarService } from '../services/car-service.service';
     GarageModule,
   ],
   exports: [WinnersComponent],
-  providers: [WinnerService, CarService],
+  providers: [WinnerService, CarService,WinnersSorterService],
 })
 export class WinnersModule {}

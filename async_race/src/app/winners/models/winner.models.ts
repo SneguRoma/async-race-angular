@@ -22,3 +22,11 @@ export interface IGetWinners {
   data: IWin[];
   totalCount: number;
 }
+
+export interface IWinSort{
+    field: SortField,
+    order: SortOrder 
+}
+
+export type SortField = 'id' | 'wins' | 'time';
+export type SortOrder = 'ASC' | 'DESC';
