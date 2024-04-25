@@ -8,7 +8,12 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ICar, ICarStartStop, ISuccess } from '../../models/garage.model';
+import {
+  ICar,
+  ICarStartStop,
+  ICarWinner,
+  ISuccess,
+} from '../../models/garage.model';
 import { CarService } from '../../../services/car-service.service';
 import { UpdateCarService } from '../../../services/update-car.service';
 import { concatMap } from 'rxjs';
@@ -17,6 +22,8 @@ const finishLineInPixel = 100;
 const pixelInStep = 30;
 const startPosition = 15;
 const stepCar = 15;
+const MILISEC_TO_SEC = 1000;
+const DIMENSIONS_OF_TIME = 2;
 
 @Component({
   selector: 'app-car-box',
@@ -25,12 +32,16 @@ const stepCar = 15;
 })
 export class CarBoxComponent implements AfterViewInit, OnDestroy {
   @Output() updateParent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() winnerRace: EventEmitter<ICarWinner> =
+    new EventEmitter<ICarWinner>();
   @ViewChild('carElement', { read: ElementRef }) carElement!: ElementRef;
   @Input() carItem!: ICar;
   data: ICarStartStop | undefined;
   isCarStarted: boolean = false;
   animationId: number | null = null;
   car: HTMLElement | undefined;
+  race: boolean = false;
+
   constructor(
     private carService: CarService,
     private updateService: UpdateCarService
@@ -40,14 +51,15 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
     this.car = this.carElement.nativeElement;
   }
 
-  startEngine(): void {
+  startEngine(race: boolean = false): void {
+    this.race = race;
     this.carService
       .startEngine(this.carItem.id)
       .pipe(
         concatMap((engineResponse: ICarStartStop) => {
           this.data = engineResponse;
           this.animationCar();
-          this.isCarStarted=true;
+          this.isCarStarted = true;
           return this.carService.startDrive(this.carItem.id);
         })
       )
@@ -77,13 +89,22 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
       if (this.car) this.car.style.left = step + 'px';
       if (step < currDist)
         this.animationId = window.requestAnimationFrame(move);
+      if (step >= currDist && this.race) {
+        const timeOfWin = (state.time / MILISEC_TO_SEC).toFixed(
+          DIMENSIONS_OF_TIME
+        );
+        const winner: ICarWinner = {
+          car: this.carItem,
+          time: timeOfWin,
+        };
+        this.winnerRace.emit(winner);
+      }
     };
     this.animationId = window.requestAnimationFrame(move);
   }
 
   stopAnimation(): void {
     if (this.animationId) {
-      
       window.cancelAnimationFrame(this.animationId);
       this.animationId = null;
     }
@@ -92,13 +113,13 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
   stopEngine(): void {
     this.carService.stopEngine(this.carItem.id).subscribe({
       next: (data: ICarStartStop) => {
-        this.isCarStarted=false;
+        this.isCarStarted = false;
         this.data = data;
         if (this.car) this.car.style.left = startPosition + 'px';
         if (this.animationId) {
           window.cancelAnimationFrame(this.animationId);
           this.animationId = null;
-        }        
+        }
       },
       error: (response: Response) => {
         console.log('Error fetching cars:', response.body);
@@ -121,8 +142,7 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
     this.updateService.updateFormData(this.carItem);
   }
 
-
   ngOnDestroy(): void {
-    this.updateService.updateFormData({id: -1, name:'', color:''});
+    this.updateService.updateFormData({ id: -1, name: '', color: '' });
   }
 }

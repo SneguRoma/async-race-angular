@@ -5,5 +5,6 @@
   (updateParent)="ngOnInit()"
 ></app-garage-header>
 <div *ngFor="let car of cars">
-  <app-car-box (updateParent)="ngOnInit()" [carItem]="car"> </app-car-box>
+  <app-car-box (winnerRace)="winnerRace($event)" (updateParent)="ngOnInit()" [carItem]="car"> </app-car-box>
 </div>
+<app-winner-popup *ngIf="showPopup" [carName]="winner ? winner.name  : ''" [timeOfWin]="winnerTime" (closePop)="closePopup()"></app-winner-popup>

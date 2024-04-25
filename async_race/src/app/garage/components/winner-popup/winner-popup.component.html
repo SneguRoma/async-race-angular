@@ -1,0 +1,11 @@
+<div
+  class="popup-overlay"
+  tabindex="0"
+  (click)="closePopup()"
+  (keyup.enter)="closePopup()"
+>
+  <div class="popup-content">
+    <h1>The Winner is {{ carName }} with {{ timeOfWin }} seconds!!</h1>
+    <button (click)="closePopup()">Close</button>
+  </div>
+</div>

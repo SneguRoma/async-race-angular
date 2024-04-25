@@ -12,6 +12,8 @@ import { CarService } from '../services/car-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { UpdateCarService } from '../services/update-car.service';
+import { WinnerPopupComponent } from './components/winner-popup/winner-popup.component';
+import { WinnerService } from '../services/winner-service.service';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { UpdateCarService } from '../services/update-car.service';
     GarageHeaderComponent,
     CarItemComponent,
     CarBoxComponent,
+    WinnerPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,6 @@ import { UpdateCarService } from '../services/update-car.service';
     FormsModule
   ],
   exports: [GarageComponent, GarageHeaderComponent, CarItemComponent],
-  providers:[CarService, UpdateCarService]
+  providers:[CarService, UpdateCarService, WinnerService]
 })
 export class GarageModule {}

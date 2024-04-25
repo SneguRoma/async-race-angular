@@ -4,6 +4,12 @@ export interface ICar{
     "id": number
   }
 
+  export interface ICarWinner{
+    "car": ICar,
+    "time": string,
+    
+  }
+
   export interface INewCar{
     "name": string,
     "color": string,  
