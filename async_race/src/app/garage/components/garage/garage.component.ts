@@ -1,7 +1,10 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { CarService } from '../../services/car-service.service';
+import { CarService } from '../../../services/car-service.service';
 import { ICar } from '../../models/garage.model';
 import { CarBoxComponent } from '../car-box/car-box.component';
+
+const PAGE = 1;
+const CARS_ON_PAGE = 7;
 
 @Component({
   selector: 'app-garage',
@@ -12,6 +15,8 @@ export class GarageComponent implements OnInit {
   @ViewChildren(CarBoxComponent) carBoxComponents!: QueryList<CarBoxComponent>;
   cars: ICar[] = [];
   totalCars: ICar[] = [];
+  page: number = PAGE;
+  carsOnPage: number = CARS_ON_PAGE;
   constructor(private carService: CarService) {}
 
   ngOnInit(): void {
@@ -23,7 +28,7 @@ export class GarageComponent implements OnInit {
         console.error('Error fetching cars:', error);
       },
     });
-    this.carService.getCars(1, 7).subscribe({
+    this.carService.getCars(this.page, this.carsOnPage).subscribe({
       next: (cars: ICar[]) => {
         this.cars = cars;
       },

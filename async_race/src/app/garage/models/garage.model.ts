@@ -15,6 +15,5 @@ export interface ICar{
 }
 
 export interface ISuccess{
-
     "success": boolean
   }

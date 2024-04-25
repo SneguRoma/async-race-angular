@@ -9,6 +9,7 @@
       Select
     </button>
     <button
+    [disabled]="isCarStarted"
       (click)="startEngine()"
       mat-raised-button
       class="drive-box-button"
@@ -25,6 +26,7 @@
       Remove
     </button>
     <button
+    [disabled]="!isCarStarted"
       (click)="stopEngine()"
       mat-raised-button
       class="drive-box-button"

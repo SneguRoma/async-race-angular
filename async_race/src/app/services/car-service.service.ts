@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ICar, ICarStartStop, INewCar, ISuccess } from '../models/garage.model';
+import { ICar, ICarStartStop, INewCar, ISuccess } from '../garage/models/garage.model';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 7;

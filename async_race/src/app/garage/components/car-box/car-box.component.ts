@@ -4,12 +4,13 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   Output,
   ViewChild,
 } from '@angular/core';
 import { ICar, ICarStartStop, ISuccess } from '../../models/garage.model';
-import { CarService } from '../../services/car-service.service';
-import { UpdateCarService } from '../../services/update-car.service';
+import { CarService } from '../../../services/car-service.service';
+import { UpdateCarService } from '../../../services/update-car.service';
 import { concatMap } from 'rxjs';
 
 const finishLineInPixel = 100;
@@ -22,12 +23,12 @@ const stepCar = 15;
   templateUrl: './car-box.component.html',
   styleUrls: ['./car-box.component.scss'],
 })
-export class CarBoxComponent implements AfterViewInit {
+export class CarBoxComponent implements AfterViewInit, OnDestroy {
   @Output() updateParent: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('carElement', { read: ElementRef }) carElement!: ElementRef;
   @Input() carItem!: ICar;
   data: ICarStartStop | undefined;
-
+  isCarStarted: boolean = false;
   animationId: number | null = null;
   car: HTMLElement | undefined;
   constructor(
@@ -46,6 +47,7 @@ export class CarBoxComponent implements AfterViewInit {
         concatMap((engineResponse: ICarStartStop) => {
           this.data = engineResponse;
           this.animationCar();
+          this.isCarStarted=true;
           return this.carService.startDrive(this.carItem.id);
         })
       )
@@ -81,7 +83,7 @@ export class CarBoxComponent implements AfterViewInit {
 
   stopAnimation(): void {
     if (this.animationId) {
-      console.log('stop2', this.animationId);
+      
       window.cancelAnimationFrame(this.animationId);
       this.animationId = null;
     }
@@ -90,18 +92,18 @@ export class CarBoxComponent implements AfterViewInit {
   stopEngine(): void {
     this.carService.stopEngine(this.carItem.id).subscribe({
       next: (data: ICarStartStop) => {
+        this.isCarStarted=false;
         this.data = data;
+        if (this.car) this.car.style.left = startPosition + 'px';
+        if (this.animationId) {
+          window.cancelAnimationFrame(this.animationId);
+          this.animationId = null;
+        }        
       },
       error: (response: Response) => {
         console.log('Error fetching cars:', response.body);
       },
     });
-    if (this.car) this.car.style.left = startPosition + 'px';
-    if (this.animationId) {
-      window.cancelAnimationFrame(this.animationId);      
-      this.animationId = null;
-    }
-    
   }
 
   deleteCar(): void {
@@ -121,5 +123,9 @@ export class CarBoxComponent implements AfterViewInit {
 
   someMethodInCarBox(): void {
     console.log(`Method in ${this.carItem.name} car-box executed!`);
+  }
+
+  ngOnDestroy(): void {
+    this.updateService.updateFormData({id: -1, name:'', color:''});
   }
 }

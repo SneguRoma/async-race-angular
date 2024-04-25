@@ -1,8 +1,25 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { CarService } from '../../services/car-service.service';
-import { UpdateCarService } from '../../services/update-car.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
+import { CarService } from '../../../services/car-service.service';
+import { UpdateCarService } from '../../../services/update-car.service';
 import { Subscription } from 'rxjs';
-import { UNUPDATECAR_ID, COUT_CARS, getRandom, MINRANDOM, MAXNAMES, MAXMODELS, MAXCOLORS, MODELS, NAMES, COLORS } from './constants';
+import {
+  UNUPDATECAR_ID,
+  COUT_CARS,
+  getRandom,
+  MINRANDOM,
+  MAXNAMES,
+  MAXMODELS,
+  MAXCOLORS,
+  MODELS,
+  NAMES,
+  COLORS,
+} from './constants';
 
 @Component({
   selector: 'app-garage-header',

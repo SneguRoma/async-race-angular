@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { WinnersComponent } from './components/winners/winners.component';
 import { WinnersRoutingModule } from './winners-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { WinnerService } from '../services/winner-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -11,8 +13,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   imports: [
     CommonModule,
     WinnersRoutingModule,
-    MatToolbarModule
+    MatToolbarModule,
+    HttpClientModule
   ],
-  exports: [WinnersComponent]
+  exports: [WinnersComponent],
+  providers:[WinnerService]
 })
 export class WinnersModule { }
