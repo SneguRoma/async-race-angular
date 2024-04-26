@@ -1,8 +1,10 @@
 <app-winners-header [totalCount]="totalCount"></app-winners-header>
-<app-winners-table-header ></app-winners-table-header>
+<app-winners-table-header></app-winners-table-header>
 <div *ngFor="let winner of winners">
-    <app-winners-table-row [winner]="winner"></app-winners-table-row>
-  </div>
-<!-- <mat-toolbar color="primary">    
-    <span class="app-title">Winners</span>
-</mat-toolbar> -->
+  <app-winners-table-row [winner]="winner"></app-winners-table-row>
+</div>
+<app-pagination
+  (pageChange)="pageChange($event)"
+  [currentPage]="page"
+  [totalPages]="totalPages"
+></app-pagination>

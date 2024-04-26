@@ -9,6 +9,11 @@ import {
 import { WinnersSorterService } from '../../../services/winners-sorter.service';
 import { Subscription } from 'rxjs';
 
+const pagination = {
+  page: DEFAULT_PAGE,
+  totalPages: DEFAULT_PAGE
+};
+
 @Component({
   selector: 'app-winners',
   templateUrl: './winners.component.html',
@@ -21,6 +26,8 @@ export class WinnersComponent implements OnDestroy {
   };
   winners: IWin[] = [];
   totalCount: number = DEFAULT_TOTALCOUNT;
+  page: number = pagination.page;  
+  totalPages: number = pagination.totalPages;
   winnerSorterDataSubscription: Subscription;
 
   constructor(
@@ -37,7 +44,7 @@ export class WinnersComponent implements OnDestroy {
   handleSortDataChange(): void {    
     this.winnerService
       .getWinners(
-        DEFAULT_PAGE,
+        this.page,
         DEFAULT_WINNERS_LIMIT,
         this.sortedData.field,
         this.sortedData.order
@@ -46,6 +53,7 @@ export class WinnersComponent implements OnDestroy {
         next: (winners: IGetWinners) => {
           this.totalCount = winners.totalCount;
           this.winners = winners.data;
+          this.totalPages = Math.ceil(this.totalCount / DEFAULT_WINNERS_LIMIT);
         },
         error: (error: Error) => {
           console.error('Error fetching cars:', error);
@@ -53,7 +61,14 @@ export class WinnersComponent implements OnDestroy {
       });
   }
 
+  pageChange(page: number): void{
+    this.page = page;
+    this.handleSortDataChange();
+  }
+
   ngOnDestroy(): void {
     this.winnerSorterDataSubscription.unsubscribe();
+    pagination.page = this.page;
+    pagination.totalPages = this.totalPages;
   }
 }

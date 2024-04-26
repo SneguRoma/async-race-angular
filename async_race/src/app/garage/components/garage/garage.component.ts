@@ -1,28 +1,33 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CarService } from '../../../services/car-service.service';
 import { ICar, ICarWinner } from '../../models/garage.model';
 import { CarBoxComponent } from '../car-box/car-box.component';
 import { WinnerService } from '../../../services/winner-service.service';
 import { catchError, switchMap } from 'rxjs';
 import { IWin } from '../../../winners/models/winner.models';
+import { COUNTER } from '../../../constants/constants';
 
-const PAGE = 2;
+const PAGE = 1;
 const CARS_ON_PAGE = 7;
-const COUNTER = 1;
+const pagination = {
+  page: PAGE,
+  totalPages: PAGE
+};
+
 
 @Component({
   selector: 'app-garage',
   templateUrl: './garage.component.html',
   styleUrl: './garage.component.scss',
 })
-export class GarageComponent implements OnInit {
+export class GarageComponent implements OnInit, OnDestroy {
   @ViewChildren(CarBoxComponent) carBoxComponents!: QueryList<CarBoxComponent>;
   cars: ICar[] = [];
   totalCars: ICar[] = [];
   winner: ICar | null = null;
-  page: number = PAGE;
-  totalPages: number = 15;
+  page: number = pagination.page;
   carsOnPage: number = CARS_ON_PAGE;
+  totalPages: number = pagination.totalPages;
   showPopup = false;
   winnerTime = '0';
   constructor(
@@ -31,9 +36,11 @@ export class GarageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+   
     this.carService.getAllCars().subscribe({
       next: (cars: ICar[]) => {
         this.totalCars = cars;
+        this.totalPages = Math.ceil(this.totalCars.length / this.carsOnPage);        
       },
       error: (error: Error) => {
         console.error('Error fetching cars:', error);
@@ -50,6 +57,7 @@ export class GarageComponent implements OnInit {
   }
 
   startRace(): void {
+    this.winner = null;
     this.carBoxComponents.forEach((item) => item.startEngine(true));
   }
 
@@ -101,5 +109,15 @@ export class GarageComponent implements OnInit {
 
   closePopup(): void {
     this.showPopup = false;
+  }
+
+  pageChange(page: number): void{
+    this.page = page;
+    this.ngOnInit();
+  }
+
+  ngOnDestroy(): void {
+    pagination.page = this.page;
+    pagination.totalPages = this.totalPages;
   }
 }

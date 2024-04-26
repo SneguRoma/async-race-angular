@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-winner-popup',
-  
+  selector: 'app-winner-popup',  
   templateUrl: './winner-popup.component.html',
   styleUrl: './winner-popup.component.scss'
 })
@@ -14,5 +13,4 @@ export class WinnerPopupComponent {
   closePopup(): void {
     this.closePop.emit();
   }
-
 }

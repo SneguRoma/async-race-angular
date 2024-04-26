@@ -18,4 +18,8 @@
   [timeOfWin]="winnerTime"
   (closePop)="closePopup()"
 ></app-winner-popup>
-<app-pagination [currentPage]="page" [totalPages]="totalPages"></app-pagination>
+<app-pagination
+  (pageChange)="pageChange($event)"
+  [currentPage]="page"
+  [totalPages]="totalPages"
+></app-pagination>

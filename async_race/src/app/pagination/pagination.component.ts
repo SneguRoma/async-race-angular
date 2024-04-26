@@ -17,11 +17,12 @@ export class PaginationComponent implements OnChanges{
   @Input() currentPage!: number;
   @Input() totalPages!: number;
   visiblePages: number[] = [];
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
+  @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnChanges(): void {
+    
     this.updateVisiblePages();
   }
 
@@ -56,6 +57,6 @@ export class PaginationComponent implements OnChanges{
   }
 
   emitPageChange(): void {
-    this.pageChanged.emit(this.currentPage);
+    this.pageChange.emit(this.currentPage);
   }
 }
