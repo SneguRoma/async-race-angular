@@ -21,6 +21,7 @@ export class GarageComponent implements OnInit {
   totalCars: ICar[] = [];
   winner: ICar | null = null;
   page: number = PAGE;
+  totalPages: number = 15;
   carsOnPage: number = CARS_ON_PAGE;
   showPopup = false;
   winnerTime = '0';

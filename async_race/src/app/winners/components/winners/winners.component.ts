@@ -34,8 +34,7 @@ export class WinnersComponent implements OnDestroy {
       });
   }
 
-  handleSortDataChange(): void {
-    console.log('sort');
+  handleSortDataChange(): void {    
     this.winnerService
       .getWinners(
         DEFAULT_PAGE,

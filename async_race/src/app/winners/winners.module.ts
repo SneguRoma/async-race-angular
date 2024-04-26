@@ -12,6 +12,7 @@ import { GarageModule } from '../garage/garage.module';
 import { WinnersTableRowComponent } from './components/winners-table-row/winners-table-row.component';
 import { CarService } from '../services/car-service.service';
 import { WinnersSorterService } from '../services/winners-sorter.service';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { WinnersSorterService } from '../services/winners-sorter.service';
     HttpClientModule,
     MatFormFieldModule,
     GarageModule,
+    PaginationComponent
   ],
   exports: [WinnersComponent],
   providers: [WinnerService, CarService,WinnersSorterService],

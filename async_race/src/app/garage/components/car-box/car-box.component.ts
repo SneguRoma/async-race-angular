@@ -17,6 +17,7 @@ import {
 import { CarService } from '../../../services/car-service.service';
 import { UpdateCarService } from '../../../services/update-car.service';
 import { concatMap } from 'rxjs';
+import { WinnerService } from '../../../services/winner-service.service';
 
 const finishLineInPixel = 100;
 const pixelInStep = 30;
@@ -44,7 +45,8 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private carService: CarService,
-    private updateService: UpdateCarService
+    private updateService: UpdateCarService,
+    private winnerService: WinnerService
   ) {}
 
   ngAfterViewInit(): void {
@@ -136,6 +138,7 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
         console.log('Error fetching cars:', response.body);
       },
     });
+    this.winnerService.deleteWinner(this.carItem.id).subscribe();
   }
 
   selectCar(): void {

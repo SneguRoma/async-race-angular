@@ -21,6 +21,11 @@ import {
   COLORS,
 } from './constants';
 
+const car = {
+  name: '',
+  color:''
+}
+
 @Component({
   selector: 'app-garage-header',
   templateUrl: './garage-header.component.html',
@@ -31,8 +36,8 @@ export class GarageHeaderComponent implements OnDestroy {
   @Output() startRaceParent: EventEmitter<void> = new EventEmitter<void>();
   @Output() resetRaceParent: EventEmitter<void> = new EventEmitter<void>();
   @Input() totalCars: number | undefined;
-  carName: string = '';
-  carColor: string = '';
+  carName: string = car.name;
+  carColor: string = car.color;
   updateCarName: string = '';
   updateCarColor: string = '';
   updateCarId: number = UNUPDATECAR_ID;
@@ -106,5 +111,7 @@ export class GarageHeaderComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.updateCarDataSubscription.unsubscribe();
+    car.color = this.carColor;
+    car.name = this.carName;
   }
 }
