@@ -11,9 +11,8 @@ const PAGE = 1;
 const CARS_ON_PAGE = 7;
 const pagination = {
   page: PAGE,
-  totalPages: PAGE
+  totalPages: PAGE,
 };
-
 
 @Component({
   selector: 'app-garage',
@@ -32,15 +31,14 @@ export class GarageComponent implements OnInit, OnDestroy {
   winnerTime = '0';
   constructor(
     private carService: CarService,
-    private winnerService: WinnerService
+    private winnerService: WinnerService,
   ) {}
 
   ngOnInit(): void {
-   
     this.carService.getAllCars().subscribe({
       next: (cars: ICar[]) => {
         this.totalCars = cars;
-        this.totalPages = Math.ceil(this.totalCars.length / this.carsOnPage);        
+        this.totalPages = Math.ceil(this.totalCars.length / this.carsOnPage);
       },
       error: (error: Error) => {
         console.error('Error fetching cars:', error);
@@ -78,14 +76,9 @@ export class GarageComponent implements OnInit, OnDestroy {
             if (existingWinner) {
               const winnerUpdate = {
                 wins: existingWinner.wins + COUNTER,
-                time:existingWinner.time <= +$event.time
-                    ? existingWinner.time
-                    : +$event.time,
+                time: existingWinner.time <= +$event.time ? existingWinner.time : +$event.time,
               };
-              return this.winnerService.updateWinner(
-                $event.car.id,
-                winnerUpdate
-              );
+              return this.winnerService.updateWinner($event.car.id, winnerUpdate);
             } else {
               const winnerUpdate = {
                 id: $event.car.id,
@@ -102,8 +95,9 @@ export class GarageComponent implements OnInit, OnDestroy {
               time: +$event.time,
             };
             return this.winnerService.addWinner(winnerUpdate);
-          })
-        ).subscribe();
+          }),
+        )
+        .subscribe();
     }
   }
 
@@ -111,7 +105,7 @@ export class GarageComponent implements OnInit, OnDestroy {
     this.showPopup = false;
   }
 
-  pageChange(page: number): void{
+  pageChange(page: number): void {
     this.page = page;
     this.ngOnInit();
   }

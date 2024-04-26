@@ -7,12 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  ICar,
-  ICarStartStop,
-  ICarWinner,
-  ISuccess,
-} from '../../models/garage.model';
+import { ICar, ICarStartStop, ICarWinner, ISuccess } from '../../models/garage.model';
 import { CarService } from '../../../services/car-service.service';
 import { UpdateCarService } from '../../../services/update-car.service';
 import { concatMap } from 'rxjs';
@@ -32,8 +27,7 @@ const DIMENSIONS_OF_TIME = 2;
 })
 export class CarBoxComponent implements AfterViewInit {
   @Output() updateParent: EventEmitter<void> = new EventEmitter<void>();
-  @Output() winnerRace: EventEmitter<ICarWinner> =
-    new EventEmitter<ICarWinner>();
+  @Output() winnerRace: EventEmitter<ICarWinner> = new EventEmitter<ICarWinner>();
   @ViewChild('carElement', { read: ElementRef }) carElement!: ElementRef;
   @Input() carItem!: ICar;
   data: ICarStartStop | undefined;
@@ -45,7 +39,7 @@ export class CarBoxComponent implements AfterViewInit {
   constructor(
     private carService: CarService,
     private updateService: UpdateCarService,
-    private winnerService: WinnerService
+    private winnerService: WinnerService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -62,7 +56,7 @@ export class CarBoxComponent implements AfterViewInit {
           this.animationCar();
           this.isCarStarted = true;
           return this.carService.startDrive(this.carItem.id);
-        })
+        }),
       )
       .subscribe({
         next: (driveResponse: ISuccess) => {
@@ -88,12 +82,9 @@ export class CarBoxComponent implements AfterViewInit {
       const pixForSec = currDist / state.time;
       step += pixForSec * pixelInStep;
       if (this.car) this.car.style.left = step + 'px';
-      if (step < currDist)
-        this.animationId = window.requestAnimationFrame(move);
+      if (step < currDist) this.animationId = window.requestAnimationFrame(move);
       if (step >= currDist && this.race) {
-        const timeOfWin = (state.time / MILISEC_TO_SEC).toFixed(
-          DIMENSIONS_OF_TIME
-        );
+        const timeOfWin = (state.time / MILISEC_TO_SEC).toFixed(DIMENSIONS_OF_TIME);
         const winner: ICarWinner = {
           car: this.carItem,
           time: timeOfWin,

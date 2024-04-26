@@ -19,7 +19,7 @@ export class WinnerService {
     page: number = DEFAULT_PAGE,
     limit: number = DEFAULT_LIMIT,
     sort: string = 'id',
-    order: string = 'ASC'
+    order: string = 'ASC',
   ): Observable<IGetWinners> {
     let params = new HttpParams();
     if (page) {
@@ -47,7 +47,7 @@ export class WinnerService {
             data: response.body as unknown as IWin[],
             totalCount: totalCount ? parseInt(totalCount) : DEFAULT_TOTALCOUNT,
           };
-        })
+        }),
       );
   }
 

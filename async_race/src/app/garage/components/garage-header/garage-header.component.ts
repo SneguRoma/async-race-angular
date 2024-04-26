@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { CarService } from '../../../services/car-service.service';
 import { UpdateCarService } from '../../../services/update-car.service';
 import { Subscription } from 'rxjs';
@@ -51,25 +45,21 @@ export class GarageHeaderComponent implements OnDestroy {
 
   constructor(
     private carService: CarService,
-    private updateCarService: UpdateCarService
+    private updateCarService: UpdateCarService,
   ) {
-    this.updateCarDataSubscription = this.updateCarService.formsData$.subscribe(
-      (data) => {
-        this.updateCarName = updateCar.name || data.name;
-        this.updateCarColor = updateCar.color || data.color;
-        this.updateCarId = data.id;
-      }
-    );
+    this.updateCarDataSubscription = this.updateCarService.formsData$.subscribe((data) => {
+      this.updateCarName = updateCar.name || data.name;
+      this.updateCarColor = updateCar.color || data.color;
+      this.updateCarId = data.id;
+    });
   }
 
   createCar(): void {
-    this.carService
-      .addCar({ name: this.carName, color: this.carColor })
-      .subscribe({
-        next: () => {
-          this.updateParent.emit();
-        },
-      });
+    this.carService.addCar({ name: this.carName, color: this.carColor }).subscribe({
+      next: () => {
+        this.updateParent.emit();
+      },
+    });
   }
 
   startRace(): void {
@@ -99,9 +89,7 @@ export class GarageHeaderComponent implements OnDestroy {
   generateCars(): void {
     for (let i = 0; i < COUNT_CARS; i++) {
       const name =
-        NAMES[getRandom(MINRANDOM, MAXNAMES)] +
-        '  ' +
-        MODELS[getRandom(MINRANDOM, MAXMODELS)];
+        NAMES[getRandom(MINRANDOM, MAXNAMES)] + '  ' + MODELS[getRandom(MINRANDOM, MAXMODELS)];
       const color =
         '#' +
         COLORS[getRandom(MINRANDOM, MAXCOLORS)] +

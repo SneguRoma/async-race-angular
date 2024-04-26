@@ -20,7 +20,7 @@ export class WinnersTableRowComponent implements OnInit {
 
   constructor(
     private carService: CarService,
-    private winnerService: WinnerService
+    private winnerService: WinnerService,
   ) {}
 
   ngOnInit(): void {

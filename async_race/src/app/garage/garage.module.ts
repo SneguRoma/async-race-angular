@@ -17,7 +17,6 @@ import { WinnerService } from '../services/winner-service.service';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { FinishComponent } from './components/finish/finish.component';
 
-
 @NgModule({
   declarations: [
     GarageComponent,
@@ -35,9 +34,9 @@ import { FinishComponent } from './components/finish/finish.component';
     MatButtonModule,
     HttpClientModule,
     FormsModule,
-    PaginationComponent
+    PaginationComponent,
   ],
   exports: [GarageComponent, GarageHeaderComponent, CarItemComponent],
-  providers:[CarService, UpdateCarService, WinnerService]
+  providers: [CarService, UpdateCarService, WinnerService],
 })
 export class GarageModule {}

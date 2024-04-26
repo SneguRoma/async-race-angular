@@ -8,10 +8,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 
-
-
-
-
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [
@@ -21,12 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    
-    
   ],
-  exports: [
-    HeaderComponent
-  ],
+  exports: [HeaderComponent],
   bootstrap: [AppComponent, HeaderComponent],
 })
-export class AppModule { }
+export class AppModule {}

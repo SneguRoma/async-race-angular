@@ -19,7 +19,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
     WinnersComponent,
     WinnersHeaderComponent,
     WinnersTableHeaderComponent,
-    WinnersTableRowComponent
+    WinnersTableRowComponent,
   ],
   imports: [
     CommonModule,
@@ -28,9 +28,9 @@ import { PaginationComponent } from '../pagination/pagination.component';
     HttpClientModule,
     MatFormFieldModule,
     GarageModule,
-    PaginationComponent
+    PaginationComponent,
   ],
   exports: [WinnersComponent],
-  providers: [WinnerService, CarService,WinnersSorterService],
+  providers: [WinnerService, CarService, WinnersSorterService],
 })
 export class WinnersModule {}

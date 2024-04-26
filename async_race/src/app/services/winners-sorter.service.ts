@@ -6,11 +6,13 @@ import { IWinSort } from '../winners/models/winner.models';
   providedIn: 'root',
 })
 export class WinnersSorterService {
-  private formDataSubject: BehaviorSubject<IWinSort> =
-    new BehaviorSubject<IWinSort>({ field: 'wins', order: 'ASC' });
+  private formDataSubject: BehaviorSubject<IWinSort> = new BehaviorSubject<IWinSort>({
+    field: 'wins',
+    order: 'ASC',
+  });
   sortsData$: Observable<IWinSort> = this.formDataSubject.asObservable();
 
-  constructor(){}
+  constructor() {}
 
   sortData(data: IWinSort): void {
     this.formDataSubject.next(data);

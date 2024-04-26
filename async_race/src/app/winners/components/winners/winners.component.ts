@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 const pagination = {
   page: DEFAULT_PAGE,
-  totalPages: DEFAULT_PAGE
+  totalPages: DEFAULT_PAGE,
 };
 
 @Component({
@@ -26,29 +26,23 @@ export class WinnersComponent implements OnDestroy {
   };
   winners: IWin[] = [];
   totalCount: number = DEFAULT_TOTALCOUNT;
-  page: number = pagination.page;  
+  page: number = pagination.page;
   totalPages: number = pagination.totalPages;
   winnerSorterDataSubscription: Subscription;
 
   constructor(
     private winnerService: WinnerService,
-    private winnerSorterService: WinnersSorterService
+    private winnerSorterService: WinnersSorterService,
   ) {
-    this.winnerSorterDataSubscription =
-      this.winnerSorterService.sortsData$.subscribe((data) => {
-        this.sortedData = data;
-        this.handleSortDataChange();
-      });
+    this.winnerSorterDataSubscription = this.winnerSorterService.sortsData$.subscribe((data) => {
+      this.sortedData = data;
+      this.handleSortDataChange();
+    });
   }
 
-  handleSortDataChange(): void {    
+  handleSortDataChange(): void {
     this.winnerService
-      .getWinners(
-        this.page,
-        DEFAULT_WINNERS_LIMIT,
-        this.sortedData.field,
-        this.sortedData.order
-      )
+      .getWinners(this.page, DEFAULT_WINNERS_LIMIT, this.sortedData.field, this.sortedData.order)
       .subscribe({
         next: (winners: IGetWinners) => {
           this.totalCount = winners.totalCount;
@@ -61,7 +55,7 @@ export class WinnersComponent implements OnDestroy {
       });
   }
 
-  pageChange(page: number): void{
+  pageChange(page: number): void {
     this.page = page;
     this.handleSortDataChange();
   }

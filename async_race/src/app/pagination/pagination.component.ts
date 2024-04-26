@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { COUNTER } from '../constants/constants';
 
 const VISIBLE_PAGES_PER_SIDE = 2;
@@ -11,18 +11,17 @@ const VISIBLE_PAGES = 4;
   standalone: true,
   imports: [MatIconModule, CommonModule],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss'
+  styleUrl: './pagination.component.scss',
 })
-export class PaginationComponent implements OnChanges{
+export class PaginationComponent implements OnChanges {
   @Input() currentPage!: number;
   @Input() totalPages!: number;
   visiblePages: number[] = [];
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(): void {
-    
     this.updateVisiblePages();
   }
 
@@ -43,7 +42,7 @@ export class PaginationComponent implements OnChanges{
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-     this.updateVisiblePages();
+      this.updateVisiblePages();
       this.emitPageChange();
     }
   }
@@ -51,7 +50,7 @@ export class PaginationComponent implements OnChanges{
   goToPage(page: number): void {
     if (page >= COUNTER && page <= this.totalPages) {
       this.currentPage = page;
-     this.updateVisiblePages();
+      this.updateVisiblePages();
       this.emitPageChange();
     }
   }

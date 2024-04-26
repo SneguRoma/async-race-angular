@@ -7,7 +7,7 @@ import { IWinSort, SortField } from '../../models/winner.models';
   templateUrl: './winners-table-header.component.html',
   styleUrl: './winners-table-header.component.scss',
 })
-export class WinnersTableHeaderComponent {  
+export class WinnersTableHeaderComponent {
   sortingData: IWinSort = {
     field: 'id',
     order: 'ASC',
@@ -15,14 +15,11 @@ export class WinnersTableHeaderComponent {
 
   constructor(private winnersSorterService: WinnersSorterService) {}
 
-  
-
-  changeSortField(field: SortField): void {    
+  changeSortField(field: SortField): void {
     this.sortingData.field = field;
     if (this.sortingData.order === 'ASC') {
       this.sortingData.order = 'DESC';
-    } else this.sortingData.order = 'ASC';    
+    } else this.sortingData.order = 'ASC';
     this.winnersSorterService.sortData(this.sortingData);
   }
 }
-

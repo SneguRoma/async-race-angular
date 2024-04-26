@@ -23,9 +23,9 @@ export interface IGetWinners {
   totalCount: number;
 }
 
-export interface IWinSort{
-    field: SortField,
-    order: SortOrder 
+export interface IWinSort {
+  field: SortField;
+  order: SortOrder;
 }
 
 export type SortField = 'id' | 'wins' | 'time';
