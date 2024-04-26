@@ -1,0 +1,29 @@
+.header-row {
+  display: flex;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-cell {
+    font-size: 24px;
+    font-weight: bold;
+  margin-right: 5px;
+  flex: 1;
+  padding: 0 10px;
+  
+}
+
+.button{
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.name {
+  flex: 2;
+}
+

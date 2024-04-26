@@ -1,0 +1,19 @@
+.app-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin: 20px;    
+  }
+
+  .spacer {
+    flex: 1;
+  }
+  
+  mat-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    
+  }
+  
