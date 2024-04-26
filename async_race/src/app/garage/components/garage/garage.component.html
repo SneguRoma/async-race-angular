@@ -4,6 +4,7 @@
   (startRaceParent)="startRace()"
   (updateParent)="ngOnInit()"
 ></app-garage-header>
+
 <div *ngFor="let car of cars">
   <app-car-box
     (winnerRace)="winnerRace($event)"

@@ -15,6 +15,7 @@ import { UpdateCarService } from '../services/update-car.service';
 import { WinnerPopupComponent } from './components/winner-popup/winner-popup.component';
 import { WinnerService } from '../services/winner-service.service';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { FinishComponent } from './components/finish/finish.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
     CarItemComponent,
     CarBoxComponent,
     WinnerPopupComponent,
+    FinishComponent,
   ],
   imports: [
     CommonModule,

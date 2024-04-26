@@ -4,7 +4,6 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnDestroy,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -31,7 +30,7 @@ const DIMENSIONS_OF_TIME = 2;
   templateUrl: './car-box.component.html',
   styleUrls: ['./car-box.component.scss'],
 })
-export class CarBoxComponent implements AfterViewInit, OnDestroy {
+export class CarBoxComponent implements AfterViewInit {
   @Output() updateParent: EventEmitter<void> = new EventEmitter<void>();
   @Output() winnerRace: EventEmitter<ICarWinner> =
     new EventEmitter<ICarWinner>();
@@ -143,9 +142,5 @@ export class CarBoxComponent implements AfterViewInit, OnDestroy {
 
   selectCar(): void {
     this.updateService.updateFormData(this.carItem);
-  }
-
-  ngOnDestroy(): void {
-    this.updateService.updateFormData({ id: -1, name: '', color: '' });
   }
 }

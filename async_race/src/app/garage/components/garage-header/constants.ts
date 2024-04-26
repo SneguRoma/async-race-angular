@@ -1,34 +1,35 @@
 export const UNUPDATECAR_ID = -1;
 export const NAMES = [
-  'opel',
-  'opelek',
-  'opelishche',
-  'opelushecka',
-  'opelundra',
-  'opelulechka',
-  'opeleshenka',
-  'opelenochka',
-  'opeluha',
-  'opelusechka',
+  'Opel',
+  'Opelek',
+  'Opelishche',
+  'Opelushecka',
+  'Opelundra',
+  'Opelulechka',
+  'Opeleshenka',
+  'Opelenochka',
+  'Opeluha',
+  'Opelusechka',
 ];
 export const MODELS = [
-  'astra',
-  'cadett',
-  'vectra',
-  'zafira',
-  'adam',
+  'Astra',
+  'Cadett',
+  'Vectra',
+  'Zafira',
+  'Adam',
   'Mokka',
-  'wiski',
-  'rom',
-  'wine',
-  'beer',
+  'Wiski',
+  'Rom',
+  'Wine',
+  'Beer',
 ];
 export const COLORS = '0123456789abcdef';
 export const MINRANDOM = 0;
 export const MAXNAMES = NAMES.length;
 export const MAXMODELS = MODELS.length;
 export const MAXCOLORS = COLORS.length;
-export const COUT_CARS = 100;
+export const COUNT_CARS = 100;
+export const NONUPDATABLE_ID = -1;
 export const getRandom = (min: number, max: number):number => {
   return Math.floor(Math.random() * (max - min) + min);
 };

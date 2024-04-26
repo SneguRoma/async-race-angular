@@ -35,7 +35,8 @@
       Stop
     </button>
   </div>
-  <p>{{ this.carItem.name }}</p>
+  <div class="car-name">{{ this.carItem.name }}</div>
+  
 </div>
 <div class="car-container">
   <app-car-item
@@ -43,4 +44,8 @@
     [color]="carItem.color"
     class="car-item"
   ></app-car-item>
+  
+  <div class="road-line"></div>
+<app-finish class="finish"></app-finish>
 </div>
+

@@ -10,7 +10,7 @@ import { UpdateCarService } from '../../../services/update-car.service';
 import { Subscription } from 'rxjs';
 import {
   UNUPDATECAR_ID,
-  COUT_CARS,
+  COUNT_CARS,
   getRandom,
   MINRANDOM,
   MAXNAMES,
@@ -19,12 +19,18 @@ import {
   MODELS,
   NAMES,
   COLORS,
+  NONUPDATABLE_ID,
 } from './constants';
 
 const car = {
   name: '',
-  color:''
-}
+  color: '',
+};
+
+const updateCar = {
+  name: '',
+  color: '',
+};
 
 @Component({
   selector: 'app-garage-header',
@@ -38,8 +44,8 @@ export class GarageHeaderComponent implements OnDestroy {
   @Input() totalCars: number | undefined;
   carName: string = car.name;
   carColor: string = car.color;
-  updateCarName: string = '';
-  updateCarColor: string = '';
+  updateCarName: string = updateCar.name;
+  updateCarColor: string = updateCar.color;
   updateCarId: number = UNUPDATECAR_ID;
   updateCarDataSubscription: Subscription;
 
@@ -49,8 +55,8 @@ export class GarageHeaderComponent implements OnDestroy {
   ) {
     this.updateCarDataSubscription = this.updateCarService.formsData$.subscribe(
       (data) => {
-        this.updateCarName = data.name;
-        this.updateCarColor = data.color;
+        this.updateCarName = updateCar.name || data.name;
+        this.updateCarColor = updateCar.color || data.color;
         this.updateCarId = data.id;
       }
     );
@@ -91,7 +97,7 @@ export class GarageHeaderComponent implements OnDestroy {
   }
 
   generateCars(): void {
-    for (let i = 0; i < COUT_CARS; i++) {
+    for (let i = 0; i < COUNT_CARS; i++) {
       const name =
         NAMES[getRandom(MINRANDOM, MAXNAMES)] +
         '  ' +
@@ -113,5 +119,13 @@ export class GarageHeaderComponent implements OnDestroy {
     this.updateCarDataSubscription.unsubscribe();
     car.color = this.carColor;
     car.name = this.carName;
+    updateCar.color = this.updateCarColor;
+    updateCar.name = this.updateCarName;
+    if (this.updateCarId === NONUPDATABLE_ID)
+      this.updateCarService.updateFormData({
+        id: NONUPDATABLE_ID,
+        name: '',
+        color: '',
+      });
   }
 }

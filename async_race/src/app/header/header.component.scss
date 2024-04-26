@@ -1,15 +1,24 @@
 mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+@media screen and (max-width: 700px) {
   .app-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
     color: white;
-    margin: 20px;
+    margin: 10px;
   }
-  
-  .spacer {
-    flex: 1 1 auto;
-  }
+}
