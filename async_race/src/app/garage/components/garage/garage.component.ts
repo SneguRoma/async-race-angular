@@ -1,17 +1,20 @@
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CarService } from '../../../services/car-service.service';
-import { ICar, ICarWinner } from '../../models/garage.model';
+import { ICar, ICarWinner, IGetCars } from '../../models/garage.model';
 import { CarBoxComponent } from '../car-box/car-box.component';
 import { WinnerService } from '../../../services/winner-service.service';
 import { catchError, switchMap } from 'rxjs';
 import { IWin } from '../../../winners/models/winner.models';
-import { COUNTER } from '../../../constants/constants';
+import {
+  COUNTER,
+  DEFAULT_CAR_LIMIT,
+  DEFAULT_PAGE,
+  DEFAULT_TOTALCOUNT,
+} from '../../../constants/constants';
 
-const PAGE = 1;
-const CARS_ON_PAGE = 7;
 const pagination = {
-  page: PAGE,
-  totalPages: PAGE,
+  page: DEFAULT_PAGE,
+  totalPages: DEFAULT_PAGE,
 };
 
 @Component({
@@ -22,31 +25,25 @@ const pagination = {
 export class GarageComponent implements OnInit, OnDestroy {
   @ViewChildren(CarBoxComponent) carBoxComponents!: QueryList<CarBoxComponent>;
   cars: ICar[] = [];
-  totalCars: ICar[] = [];
+  totalCars: number = DEFAULT_TOTALCOUNT;
   winner: ICar | null = null;
   page: number = pagination.page;
-  carsOnPage: number = CARS_ON_PAGE;
+  carsOnPage: number = DEFAULT_CAR_LIMIT;
   totalPages: number = pagination.totalPages;
   showPopup = false;
   winnerTime = '0';
+  isRaceEnded: boolean = true;
   constructor(
     private carService: CarService,
     private winnerService: WinnerService,
   ) {}
 
   ngOnInit(): void {
-    this.carService.getAllCars().subscribe({
-      next: (cars: ICar[]) => {
-        this.totalCars = cars;
-        this.totalPages = Math.ceil(this.totalCars.length / this.carsOnPage);
-      },
-      error: (error: Error) => {
-        console.error('Error fetching cars:', error);
-      },
-    });
     this.carService.getCars(this.page, this.carsOnPage).subscribe({
-      next: (cars: ICar[]) => {
-        this.cars = cars;
+      next: (cars: IGetCars) => {
+        this.totalCars = cars.totalCount;
+        this.cars = cars.data;
+        this.totalPages = Math.ceil(this.totalCars / DEFAULT_CAR_LIMIT);
       },
       error: (error: Error) => {
         console.error('Error fetching cars:', error);
@@ -61,13 +58,14 @@ export class GarageComponent implements OnInit, OnDestroy {
 
   resetRace(): void {
     this.carBoxComponents.forEach((item) => item.stopEngine());
-    this.winner = null;
+    this.isRaceEnded = true;
   }
 
   winnerRace($event: ICarWinner): void {
     if (!this.winner) {
       this.winner = $event.car;
       this.winnerTime = $event.time;
+      this.isRaceEnded = false;
       this.showPopup = true;
       this.winnerService
         .getWinner($event.car.id)

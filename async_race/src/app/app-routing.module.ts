@@ -11,7 +11,6 @@ const routes: Routes = [
     path: 'winners',
     loadChildren: () => import('./winners/winners.module').then((m) => m.WinnersModule),
   },
-  //{ path: '**', component: Page404Component },
 ];
 
 @NgModule({

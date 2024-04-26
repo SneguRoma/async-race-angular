@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { IGetWinners, IWin, IWinUpdate } from '../winners/models/winner.models';
-import { DEFAULT_TOTALCOUNT } from '../constants/constants';
-
-const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 10;
+import { DEFAULT_PAGE, DEFAULT_TOTALCOUNT, DEFAULT_WINNERS_LIMIT } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +14,7 @@ export class WinnerService {
 
   getWinners(
     page: number = DEFAULT_PAGE,
-    limit: number = DEFAULT_LIMIT,
+    limit: number = DEFAULT_WINNERS_LIMIT,
     sort: string = 'id',
     order: string = 'ASC',
   ): Observable<IGetWinners> {

@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { COUNTER } from '../constants/constants';
-
-const VISIBLE_PAGES_PER_SIDE = 2;
-const VISIBLE_PAGES = 4;
+import { VISIBLE_PAGES, VISIBLE_PAGES_PER_SIDE } from './constants';
 
 @Component({
   selector: 'app-pagination',

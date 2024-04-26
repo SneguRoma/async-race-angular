@@ -4,6 +4,11 @@ export interface ICar {
   id: number;
 }
 
+export interface IGetCars {
+  data: ICar[];
+  totalCount: number;
+}
+
 export interface ICarWinner {
   car: ICar;
   time: string;

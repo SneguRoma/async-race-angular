@@ -12,13 +12,14 @@ import { CarService } from '../../../services/car-service.service';
 import { UpdateCarService } from '../../../services/update-car.service';
 import { concatMap } from 'rxjs';
 import { WinnerService } from '../../../services/winner-service.service';
-
-const finishLineInPixel = 100;
-const pixelInStep = 30;
-const startPosition = 15;
-const stepCar = 15;
-const MILISEC_TO_SEC = 1000;
-const DIMENSIONS_OF_TIME = 2;
+import {
+  CAR_STEP,
+  DIMENSIONS_OF_TIME,
+  FINISH_LINE_IN_PIXEL,
+  MILISEC_TO_SEC,
+  PIXEL_IN_STEP,
+  START_POSITION,
+} from './constants';
 
 @Component({
   selector: 'app-car-box',
@@ -66,21 +67,21 @@ export class CarBoxComponent implements AfterViewInit {
         },
         error: (response: Response) => {
           this.stopAnimation();
-          console.log('Error fetching cars:', response.body);
+          console.error('Error fetching cars:', response.body);
         },
       });
   }
 
   animationCar(): void {
     const state: { time: number } = { time: 0 };
-    let step = stepCar;
+    let step = CAR_STEP;
     if (this.data?.velocity && this.data.distance) {
       state.time = this.data.distance / this.data.velocity;
     }
     const move = () => {
-      const currDist = document.body.clientWidth - finishLineInPixel;
+      const currDist = document.body.clientWidth - FINISH_LINE_IN_PIXEL;
       const pixForSec = currDist / state.time;
-      step += pixForSec * pixelInStep;
+      step += pixForSec * PIXEL_IN_STEP;
       if (this.car) this.car.style.left = step + 'px';
       if (step < currDist) this.animationId = window.requestAnimationFrame(move);
       if (step >= currDist && this.race) {
@@ -107,14 +108,14 @@ export class CarBoxComponent implements AfterViewInit {
       next: (data: ICarStartStop) => {
         this.isCarStarted = false;
         this.data = data;
-        if (this.car) this.car.style.left = startPosition + 'px';
+        if (this.car) this.car.style.left = START_POSITION + 'px';
         if (this.animationId) {
           window.cancelAnimationFrame(this.animationId);
           this.animationId = null;
         }
       },
       error: (response: Response) => {
-        console.log('Error fetching cars:', response.body);
+        console.error('Error fetching cars:', response.body);
       },
     });
   }
@@ -125,7 +126,7 @@ export class CarBoxComponent implements AfterViewInit {
         this.updateParent.emit();
       },
       error: (response: Response) => {
-        console.log('Error fetching cars:', response.body);
+        console.error('Error fetching cars:', response.body);
       },
     });
     this.winnerService.deleteWinner(this.carItem.id).subscribe();

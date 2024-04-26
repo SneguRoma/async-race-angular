@@ -15,6 +15,7 @@ import {
   COLORS,
   NONUPDATABLE_ID,
 } from './constants';
+import { COUNTER } from '../../../constants/constants';
 
 const car = {
   name: '',
@@ -36,6 +37,7 @@ export class GarageHeaderComponent implements OnDestroy {
   @Output() startRaceParent: EventEmitter<void> = new EventEmitter<void>();
   @Output() resetRaceParent: EventEmitter<void> = new EventEmitter<void>();
   @Input() totalCars: number | undefined;
+  @Input() isRaceEnded: boolean = true;
   carName: string = car.name;
   carColor: string = car.color;
   updateCarName: string = updateCar.name;
@@ -98,9 +100,12 @@ export class GarageHeaderComponent implements OnDestroy {
         COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
         COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
         COLORS[getRandom(MINRANDOM, MAXCOLORS)];
-      this.carService.addCar({ name: name, color: color }).subscribe();
+      this.carService.addCar({ name: name, color: color }).subscribe({
+        next: () => {
+          if (i >= COUNT_CARS - COUNTER) this.updateParent.emit();
+        },
+      });
     }
-    this.updateParent.emit();
   }
 
   ngOnDestroy(): void {

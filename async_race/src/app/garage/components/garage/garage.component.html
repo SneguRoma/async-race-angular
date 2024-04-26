@@ -1,5 +1,6 @@
 <app-garage-header
-  [totalCars]="totalCars.length"
+  [totalCars]="totalCars"
+  [isRaceEnded]="isRaceEnded"
   (resetRaceParent)="resetRace()"
   (startRaceParent)="startRace()"
   (updateParent)="ngOnInit()"

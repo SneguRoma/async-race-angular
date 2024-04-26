@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
-  <button (click)="startRace()" mat-raised-button color="accent" class="oval-button">Race</button>
-  <button (click)="resetRace()" mat-raised-button color="warn" class="oval-button">Reset</button>
+  <button [disabled]="!isRaceEnded" (click)="startRace()" mat-raised-button color="accent" class="oval-button">Race</button>
+  <button [disabled]="isRaceEnded" (click)="resetRace()" mat-raised-button color="warn" class="oval-button">Reset</button>
   <span class="spacer"></span>
   <form class="my-form" (submit)="createCar()">
     <div class="form-group">

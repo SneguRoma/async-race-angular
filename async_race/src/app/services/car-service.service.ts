@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ICar, ICarStartStop, INewCar, ISuccess } from '../garage/models/garage.model';
-
-const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 7;
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { ICar, ICarStartStop, IGetCars, INewCar, ISuccess } from '../garage/models/garage.model';
+import { DEFAULT_CAR_LIMIT, DEFAULT_PAGE, DEFAULT_TOTALCOUNT } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +13,28 @@ export class CarService {
 
   constructor(private http: HttpClient) {}
 
-  getCars(page: number = DEFAULT_PAGE, limit: number = DEFAULT_LIMIT): Observable<ICar[]> {
-    const url = `${this.apiUrlGarage}?_page=${page}&_limit=${limit}`;
-    return this.http.get<ICar[]>(url);
+  getCars(page: number = DEFAULT_PAGE, limit: number = DEFAULT_CAR_LIMIT): Observable<IGetCars> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.set('_page', page.toString());
+    }
+    if (limit) {
+      params = params.set('_limit', limit.toString());
+    }
+    return this.http
+      .get<{ data: ICar[]; totalCount: number }>(this.apiUrlGarage, {
+        params,
+        observe: 'response',
+      })
+      .pipe(
+        map((response) => {
+          const totalCount = response.headers.get('X-Total-Count');
+          return {
+            data: response.body as unknown as ICar[],
+            totalCount: totalCount ? parseInt(totalCount) : DEFAULT_TOTALCOUNT,
+          };
+        }),
+      );
   }
 
   getAllCars(): Observable<ICar[]> {
