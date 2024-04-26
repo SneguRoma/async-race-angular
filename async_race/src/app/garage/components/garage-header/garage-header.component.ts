@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { CarService } from '../../../services/car-service.service';
 import { UpdateCarService } from '../../../services/update-car.service';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import {
   UNUPDATECAR_ID,
   COUNT_CARS,
@@ -15,7 +15,6 @@ import {
   COLORS,
   NONUPDATABLE_ID,
 } from './constants';
-import { COUNTER } from '../../../constants/constants';
 
 const car = {
   name: '',
@@ -89,6 +88,7 @@ export class GarageHeaderComponent implements OnDestroy {
   }
 
   generateCars(): void {
+    const addCarObservables = [];
     for (let i = 0; i < COUNT_CARS; i++) {
       const name =
         NAMES[getRandom(MINRANDOM, MAXNAMES)] + '  ' + MODELS[getRandom(MINRANDOM, MAXMODELS)];
@@ -100,12 +100,18 @@ export class GarageHeaderComponent implements OnDestroy {
         COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
         COLORS[getRandom(MINRANDOM, MAXCOLORS)] +
         COLORS[getRandom(MINRANDOM, MAXCOLORS)];
-      this.carService.addCar({ name: name, color: color }).subscribe({
-        next: () => {
-          if (i >= COUNT_CARS - COUNTER) this.updateParent.emit();
-        },
-      });
+      const addCarObservable = this.carService.addCar({ name: name, color: color });
+      addCarObservables.push(addCarObservable);
     }
+
+    forkJoin(addCarObservables).subscribe({
+      next: () => {
+        this.updateParent.emit();
+      },
+      error: (error) => {
+        console.error('Error adding cars:', error);
+      },
+    });
   }
 
   ngOnDestroy(): void {
