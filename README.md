@@ -1,4 +1,5 @@
-# AsyncRace  
+# AsyncRace
+## 🚀 Total points
 Total points 370 + Up to 35 points from reviewer for Overall Code Quality
 
 ## 🚀 UI Deployment
