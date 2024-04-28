@@ -14,10 +14,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Code linting
 
-Run `npm run lint` to run linter 
-Run `npm run lint:fix` to run linter 
-Run `npm run format` to run linter 
-Run `npm ci:format` to run linter 
+- Run `npm run lint` to run linter 
+- Run `npm run lint:fix` to run linter with fixing
+- Run `npm run format` to run prettier with fixing  
+- Run `npm ci:format` to run prettier
 
 ## Build
 
