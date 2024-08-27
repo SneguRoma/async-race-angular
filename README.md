@@ -1,11 +1,9 @@
 # AsyncRace
-## 🚀 Total points
-Total points 370 + Up to 35 points from reviewer for Overall Code Quality
 
 ## 🚀 UI Deployment
 https://662c025e769e9024ddfd4aaa--ubiquitous-meringue-d270e7.netlify.app
 
-## 🚀 server for this application
+## 🚀 Server for this application
 https://github.com/mikhama/async-race-api
 
 ## Development server
@@ -126,6 +124,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
   - (**-30**) Major bug (implemented functionality works but breaks down after certain manipulations, with unexpected errors in the browser's console).
   - (**-10**) Minor bug (implemented functionality works but behaves inconsistently after certain manipulations, such as a button not becoming enabled after changing some state, with no errors in the browser's console).
   - **Note:** If you repeatedly press the "start engine button" then the "stop engine button" or the "start race button" then the "reset race button" and see a "404" or "429" error, this is not considered a bug.
+
+   ## 🚀 Total points
+Total points 370 + Up to 35 points from reviewer for Overall Code Quality
 
 
 
